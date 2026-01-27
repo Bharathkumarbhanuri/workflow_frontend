@@ -8,6 +8,8 @@ import RunDetail from '../pages/Runs/RunDetail.jsx';
 import Login from "../pages/Auth/Login.jsx";
 import RequireAuth from "./RequireAuth.jsx";
 import Signup from '../pages/Auth/Signup.jsx';
+import EmailsList from '../pages/Emails/EmailsList.jsx';
+import NotificationsList from "../pages/Notifications/NotificationsList.jsx";
 
 function HomeRedirect() {
   const token = localStorage.getItem("token");
@@ -30,6 +32,8 @@ export const router = createBrowserRouter(
       <Route path="workflows/:id/edit" element={<RequireAuth><WorkflowCreate /></RequireAuth>} />
       <Route path="runs" element={<RequireAuth><RunsList /></RequireAuth>} />
       <Route path="runs/:id" element={<RequireAuth><RunDetail /></RequireAuth>} />
+      <Route path="emails" element={<RequireAuth><EmailsList /></RequireAuth>} />
+      <Route path="notifications" element={<RequireAuth><NotificationsList /></RequireAuth>} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

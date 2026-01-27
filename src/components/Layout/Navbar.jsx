@@ -30,6 +30,18 @@ function Navbar() {
                     >Runs
                     </NavLink>
 
+                    <NavLink to="/emails"
+                        className={({ isActive }) => `${linkClass} ${isActive ? activeClass : ""}`}
+                    >
+                        Emails
+                    </NavLink>
+
+                    <NavLink to="/notifications"
+                        className={({ isActive }) => `${linkClass} ${isActive ? activeClass : ""}`}
+                    >
+                        Notifications
+                    </NavLink>
+
                     <div className="relative">
                         <button
                             onClick={() => setOpen((o) => !o)}
@@ -41,9 +53,9 @@ function Navbar() {
 
                     {open && (
                         <div className="absolute right-0 rounded top-12 shadow-lg w-32 mt-2 border bg-white">
-                            <button 
-                            onClick={handleLogout}
-                            className="w-full text-left px-4 py-2 text-sm text-semibold"
+                            <button
+                                onClick={handleLogout}
+                                className="w-full text-left px-4 py-2 text-sm text-semibold"
                             >
                                 Logout
                             </button>
