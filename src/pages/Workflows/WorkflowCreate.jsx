@@ -18,7 +18,7 @@ function WorkflowCreate() {
         active: true,
     });
     const [eventTypes, setEventTypes] = useState([]);
-    const STEP_TYPES = ["ACTION_EMAIL", "ACTION_NOTIFICATION", "CONDITION", "DELAY"];
+    const STEP_TYPES = ["ACTION_EMAIL", "ACTION_NOTIFICATION"];
     const [steps, setSteps] = useState([]);
 
     const defaultConfigFor = (type) => {
@@ -27,10 +27,6 @@ function WorkflowCreate() {
                 return { toExpression: "{{payload.customerEmail}}", subjectTemplate: "", bodyTemplate: "" };
             case "ACTION_NOTIFICATION":
                 return { messageTemplate: "" };
-            case "CONDITION":
-                return { fieldPath: "payload.totalAmount", operator: ">", compareValue: 500, onFalseSkip: 1 };
-            case "DELAY":
-                return { minutes: 10 };
             default:
                 return {};
         }
@@ -349,7 +345,7 @@ function WorkflowCreate() {
                                                 <div>
                                                     <div>Step {idx + 1}</div>
                                                     <div className="text-xs text-gray-500">
-                                                        Configure action/condition
+                                                        Configure action
                                                     </div>
                                                 </div>
                                                 <div className='flex items-center gap-1'>
@@ -432,64 +428,6 @@ function WorkflowCreate() {
                                                         onChange={(e) => handleStepConfigField(idx, "messageTemplate", e.target.value)}
                                                         placeholder="New order {{payload.orderId}}"
                                                     ></textarea>
-                                                </div>
-                                            )}
-                                            {step.type === "CONDITION" && (
-                                                <div className="space-y-3">
-                                                    <div>
-                                                        <label className={labelClass}>Field Path</label>
-                                                        <input
-                                                            className={inputClass}
-                                                            value={step.config.fieldPath || ""}
-                                                            onChange={(e) => handleStepConfigField(idx, "fieldPath", e.target.value)}
-                                                            placeholder="payload.totalAmount"
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <label className={labelClass}>Operator</label>
-                                                        <select
-                                                            className={inputClass}
-                                                            value={step.config.operator || ">"}
-                                                            onChange={(e) => handleStepConfigField(idx, "operator", e.target.value)}
-                                                        >
-                                                            <option value="">select operator</option>
-                                                            <option value="==">==</option>
-                                                            <option value=">">{">"}</option>
-                                                            <option value="<">{"<"}</option>
-                                                            <option value=">=">{">="}</option>
-                                                            <option value="<=">{"<="}</option>
-                                                        </select>
-                                                    </div>
-                                                    <div>
-                                                        <label className={labelClass}>Value</label>
-                                                        <input
-                                                            className={inputClass}
-                                                            value={step.config.compareValue || {}}
-                                                            onChange={(e) => handleStepConfigField(idx, "compareValue", e.target.value)}
-                                                            placeholder="500"
-                                                        />
-                                                    </div>
-                                                    <div>
-                                                        <label className={labelClass}>onFalseSkip</label>
-                                                        <input
-                                                            className={inputClass}
-                                                            value={step.config.onFalseSkip ?? 1}
-                                                            onChange={(e) => handleStepConfigField(idx, "onFalseSkip", Number(e.target.value))}
-                                                            min={0}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            )}
-                                            {step.type === "DELAY" && (
-                                                <div>
-                                                    <label className={labelClass}>delay</label>
-                                                    <input
-                                                        type='number'
-                                                        className={inputClass}
-                                                        value={step.config.minutes ?? 5}
-                                                        onChange={(e) => handleStepConfigField(idx, "minutes", Number(e.target.value))}
-                                                        min={0}
-                                                    />
                                                 </div>
                                             )}
                                         </div>
