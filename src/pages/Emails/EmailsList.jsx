@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import EmailsAPI from '../../api/emails.api';
+import {EmailsAPI} from '../../api/emails.api';
 import Table from '../../components/Table';
 import ErrorToast from '../../components/Common/ErrorToast';
 
@@ -18,7 +18,7 @@ function EmailsList() {
         setLoading(true);
         try {
             const res = await EmailsAPI.list({ page: 0, size: 20 });
-            setEmails(res.data)
+            setEmails(res.data.content);
         } catch (error) {
             console.error("Failed to fetch emails:", error);
             setErr(error?.response?.data || error.message || "Failed to fetch emails");
@@ -44,8 +44,7 @@ function EmailsList() {
             </div>
             <Table columns={columns} data={emails} rowKey="id" />
 
-            <ErrorToast show={!!err} message={String(err)} onClose={() => setErr("")}
-            />
+            <ErrorToast show={!!err} message={String(err)} onClose={() => setErr("")} />
         </div>
     )
 }
